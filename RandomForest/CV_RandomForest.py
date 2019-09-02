@@ -58,12 +58,13 @@ def cv_RanfomForest():
 
     print("Fitting time: %s seconds " % (time.time() - start_time))
 
-    def cv_result(name:str):
+    def cv_result(name: str):
         import json
         with open("../CV_result/cv_randomForest.txt", "w") as f:
-            f.write('Parameters used for Randomized grid search ' + name + '\'s dataset: \nn_iter: '+rf_random.n_iter + "\ncv: "+rf_random.cv)
-            f.write('')
-            f.write('Best Params: \n')
+            f.write(
+                'Parameters used for Randomized grid search on ' + name + '\'s dataset: \nn_iter: ' + str(
+                    rf_random.n_iter) + "\ncv: " + str(rf_random.cv))
+            f.write('\nBest Params: \n')
             f.write(json.dumps(best_p))
             f.write('\nBest Accuracy: \n')
             f.write(json.dumps(best_r))

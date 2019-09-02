@@ -31,7 +31,7 @@ random_grid = {'C': C,
 
 clf = svm.SVC(random_state=0)
 
-rf_random = RandomizedSearchCV(estimator = clf, param_distributions=random_grid,
+rf_random = RandomizedSearchCV(estimator=clf, param_distributions=random_grid,
                                n_iter=4, cv=2, verbose=10, random_state=0, n_jobs=-1)
 
 # Fit the random search model
@@ -41,12 +41,17 @@ best_p = rf_random.best_params_
 best_r = rf_random.best_score_
 print(best_p, best_r)
 
-import json
-with open("../CV_result/cv_SVM.txt", "w") as f:
-    f.write('Best Params: \n')
-    f.write(json.dumps(best_p))
-    f.write('\nBest Accuracy: \n')
-    f.write(json.dumps(best_r))
-    f.close()
+def cv_result(name: str):
+    import json
+    with open("../CV_result/cv_SVM.txt", "w") as f:
+        f.write(
+            'Parameters used for Randomized grid search on ' + name + '\'s dataset: \nn_iter: ' + str(rf_random.n_iter) + "\ncv: " + str(rf_random.cv))
+        f.write('\nBest Params: \n')
+        f.write(json.dumps(best_p))
+        f.write('\nBest Accuracy: \n')
+        f.write(json.dumps(best_r))
+        f.close()
 
+
+cv_result(name='Mark')
 print('Hyperparameters tuning for SVM is completed')

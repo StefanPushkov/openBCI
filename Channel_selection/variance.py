@@ -10,18 +10,16 @@ def ent(data):
 
     # Read features and labels
     X = data.drop(['0'], axis=1)
-    print(X.count())
     y = data['0']#.values.ravel()
     """Calculates entropy of the passed `pd.Series`
     """
 
-    print(type(y))
     p_data = y.value_counts()
-    print(p_data)# counts occurrence of each value
+    print(p_data) # counts occurrence of each value
     entropy = scipy.stats.entropy(p_data)  # get entropy from counts
     return entropy
 
-a = ent(cf.prepared_data_15min)
+a = ent(cf.prepared_data_3min)
 print(a)
 '''
 def count_variance(datafile: str):
