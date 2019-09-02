@@ -1,0 +1,5 @@
+Mark
+Best Params:
+{"n_estimators": 2000, "min_samples_split": 2, "min_samples_leaf": 2, "max_features": "auto", "max_depth": 50, "bootstrap": False}
+Best Accuracy:
+0.9799830842965886
