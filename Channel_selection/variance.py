@@ -21,7 +21,7 @@ def ent(data):
 
 a = ent(cf.prepared_data_3min)
 print(a)
-'''
+
 def count_variance(datafile: str):
     # Read data
     data = pd.read_csv(datafile)
@@ -37,11 +37,10 @@ def count_variance(datafile: str):
     sorted_list = sorted(chan_var_list, key=lambda item: item[1], reverse=True)
     print(sorted_list)
     selected_channels = []
-    for i in range(8):
+    for i in range(4):
         selected_channels.append(str(sorted_list[i][0]))
     return selected_channels
 
 a = count_variance(cf.prepared_data_3min)
 print(a)
 
-'''

@@ -9,6 +9,7 @@ from sklearn.metrics import average_precision_score
 from sklearn.preprocessing import label_binarize
 import matplotlib.pyplot as plt
 import time
+import seaborn as sns; sns.set()
 from datetime import datetime
 from openBCI.Channel_selection import variance
 
@@ -18,9 +19,9 @@ def prediction(data: str):
     dt = pd.read_csv(data)
     # Get the channel numbers with the highest variance
     # data = data.loc[]
-    X = dt.drop(['0'], axis=1)
-    # channels = variance.count_variance(data)
-    # X = dt[channels]
+    # X = dt.drop(['0'], axis=1)
+    channels = variance.count_variance(data)
+    X = dt[channels]
     y = dt.iloc[:,8:]#.values.ravel()
     #X = np.c_[X]
 
@@ -87,6 +88,12 @@ def prediction(data: str):
 
     # Confusion matrix
     cm = confusion_matrix(y, p)
+    names = (['rest(0)', 'left', 'right'])
+    sns.heatmap(cm, square=True, annot=True, fmt='d', cbar=False,
+                xticklabels=names, yticklabels=names)
+    plt.xlabel('Truth')
+    plt.ylabel('Predicted')
+    plt.show()
     print("Conf_matrix: ", cm)
 
     # PLOT FOR EACH CLASS
