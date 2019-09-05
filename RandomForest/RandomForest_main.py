@@ -13,13 +13,13 @@ def RandomForest_fitting():
     # data_processing(cf.raw_data, 29)
     # Get csv data
     data = pd.read_csv(cf.prepared_data_15min)
-    #X = data.drop(['0'], axis=1)
+    X = data.drop(['0'], axis=1)
 
     # Get the channel numbers with the highest variance
-    channels = variance.count_variance(cf.prepared_data_15min)
+    # channels = variance.count_variance(cf.prepared_data_15min)
 
     # Get features from chosen channels
-    X = data[channels]
+    # X = data[channels]
     y = data[['0']].values.ravel()
 
     # Feature Scaling

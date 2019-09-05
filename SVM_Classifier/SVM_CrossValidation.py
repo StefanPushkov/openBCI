@@ -3,7 +3,7 @@ from sklearn.model_selection import RandomizedSearchCV
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 import numpy as np
-import config as cf
+from openBCI import config as cf
 from sklearn.model_selection import train_test_split
 
 data = pd.read_csv(cf.prepared_data_15min)

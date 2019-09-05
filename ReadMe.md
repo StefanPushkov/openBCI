@@ -1,3 +1,5 @@
+Random Forest and SVM classifiers now usе a CPU
+
 `data` folder - store raw EEG data in .txt format
 
 1. Run `main_preparation.py` inside `DataPreparation` folder, it creates file with processed raw data for classifier fitting
@@ -48,4 +50,19 @@ For Extension of Precision-Recall curve to multi-class plot
 
 - Check which model is imported (variable: ___model___)
 - Check data imported for prediction (variable: ___data___)
-- Check channels on which classes are predicted (variable: ___channels___)
+- Check channels on which classes are predicted (variable: ___channels___). To get
+channels with highest variance - run `variance.py` inside `Channel_selection` folder
+
+
+
+### Alternative GPU classifiers ###
+1. KNn - have GPU implementation, but now the CPU is used.
+ 
+    _TODO: implement GPU learning_
+2. CatBoost_Gradient - have GPU implementation. 
+
+    _TODO: implement grid-search for parameters tuning_
+
+3. XGBoost - have GPU implementation. 
+
+    _TODO: implement grid-search for parameters tuning_

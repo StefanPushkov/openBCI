@@ -3,12 +3,30 @@ import catboost.datasets as cbd
 import catboost.utils as cbu
 import numpy as np
 import pandas as pd
-import hyperopt
-import sys
+import tensorflow as tf  # Just for checking if GPU is available :)
 from openBCI import config as cf
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import accuracy_score
+
+# Checking if GPU is available
+GPU_AVAILABLE = tf.test.is_gpu_available()
+print("GPU available:", GPU_AVAILABLE)
+
+'''
+data = pd.read_csv(cf.prepared_data_15min)
+data_tr = data.loc[:130000]
+data_ts = data.loc[130001:]
+print(data.shape)
+StdScaler = StandardScaler()
+X_Train = data_tr.drop(['0'], axis=1)
+X_Train = StdScaler.fit_transform(X_Train)
+Y_Train = data_tr[['0']].values.ravel()
+
+x_test = data_ts.drop(['0'], axis=1)
+x_test = StdScaler.fit_transform(x_test)
+y_test = data_ts[['0']].values.ravel()
+'''
 
 # Get csv data
 data = pd.read_csv(cf.prepared_data_15min)
@@ -26,15 +44,20 @@ X_scaled = StdScaler.fit_transform(X)
 # Splitting the dataset into the Training set and Test set
 X_Train, x_test, Y_Train, y_test = train_test_split(X_scaled, y, test_size=0.5, random_state=0)
 
-estimator = cb.CatBoostClassifier(verbose=10, task_type='GPU')
-estimator.fit(X_Train, Y_Train)
 
+estimator = cb.CatBoostClassifier(depth=10, iterations=600, verbose=10, task_type='GPU', learning_rate=0.08, allow_writing_files=False, loss_function='MultiClass')
+#estimator = cb.CatBoostClassifier(l2_leaf_reg=0.1, depth=8, iterations=1550, verbose=10, task_type='GPU', learning_rate=0.0775, allow_writing_files=False)
+
+
+estimator.fit(X_Train, Y_Train)
 pred = estimator.predict(x_test)
 
-
+print("Saving model...")
+estimator.save_model('../models/CatBoost.mlmodel')
 ac = accuracy_score(y_test, pred)
 
 print(ac)
+
 
 '''
 class UciAdultClassifierObjective(object):

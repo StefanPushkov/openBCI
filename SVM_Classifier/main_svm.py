@@ -6,7 +6,7 @@ from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from joblib import dump, load
-import config as cf
+from openBCI  import config as cf
 #import matplotlib.pyplot as graph
 
 

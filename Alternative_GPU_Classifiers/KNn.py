@@ -7,16 +7,25 @@ from sklearn.metrics import accuracy_score
 
 
 data = pd.read_csv(cf.prepared_data_15min)
+data_tr = data.loc[:130000]
+data_ts = data.loc[130001:]
+print(data.shape)
+StdScaler = StandardScaler()
+X_Train = data_tr.drop(['0'], axis=1)
+X_Train = StdScaler.fit_transform(X_Train)
+Y_Train = data_tr[['0']].values.ravel()
 
-X = data.drop(['0'], axis=1)
-y = data[['0']].values.ravel()
+x_test = data_ts.drop(['0'], axis=1)
+x_test = StdScaler.fit_transform(x_test)
+y_test = data_ts[['0']].values.ravel()
+
 
 # Feature Scaling
-StdScaler = StandardScaler()
-X_scaled = StdScaler.fit_transform(X)
+# StdScaler = StandardScaler()
+# X_scaled = StdScaler.fit_transform(X)
 
 # Splitting the dataset into the Training set and Test set
-X_Train, x_test, Y_Train, y_test = train_test_split(X_scaled, y, test_size=0.1, random_state=0)
+#X_Train, x_test, Y_Train, y_test = train_test_split(X_scaled, y, test_size=0.1, random_state=0)
 
 
 neigh = KNeighborsClassifier(n_neighbors=5, weights='distance')
