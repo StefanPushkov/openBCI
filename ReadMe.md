@@ -45,6 +45,9 @@ For Extension of Precision-Recall curve to multi-class plot
 - Average precision score line - Gold color
 
 
+## Before running DataPreparation ##
+
+- Set `BASE_DIR` in `config.py`
 
 ## Before running prediction ##
 
