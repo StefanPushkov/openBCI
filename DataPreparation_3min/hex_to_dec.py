@@ -17,4 +17,4 @@ def hex_to_dec(filename:str, out_dir: str):
             writer = csv.writer(out_file)
             writer.writerow([1, 2, 3, 4, 5, 6, 7, 8, 0])
             writer.writerows(final_rows)
-    return out #'../prepared_data/decimal{0}.csv'.format(num)
+    return out #'E:/exp/prepared_data_3_min/decimal{0}.csv'.format(num)
