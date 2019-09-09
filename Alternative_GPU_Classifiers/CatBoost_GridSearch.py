@@ -1,7 +1,7 @@
 import catboost as cb
 import numpy as np
 import pandas as pd
-from openBCI import config as cf
+import config as cf
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import accuracy_score
@@ -11,7 +11,7 @@ from datetime import datetime
 
 def CatBoost_CV():
     # Get csv data
-    data = pd.read_csv(cf.prepared_data_15min)
+    data = pd.read_csv(cf.base_dir+cf.prepared_data_15min)
 
     X = data.drop(['0'], axis=1)
     y = data[['0']].values.ravel()

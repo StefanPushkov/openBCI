@@ -1,7 +1,5 @@
-import pandas as pd
 import statistics
-from openBCI import config as cf
-
+import config as cf
 import pandas as pd
 import scipy.stats
 

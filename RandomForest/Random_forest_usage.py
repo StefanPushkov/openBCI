@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 from sklearn.metrics import accuracy_score, balanced_accuracy_score, confusion_matrix
 from sklearn.preprocessing import StandardScaler
-from openBCI import config as cf
+import config as cf
 from sklearn.metrics import precision_recall_curve
 from sklearn.metrics import average_precision_score
 from sklearn.preprocessing import label_binarize
@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 import time
 import seaborn as sns; sns.set()
 from datetime import datetime
-from openBCI.Channel_selection import variance
+from Channel_selection import variance
 
 
 def prediction(data: str):
@@ -93,6 +93,7 @@ def prediction(data: str):
                 xticklabels=names, yticklabels=names)
     plt.xlabel('Truth')
     plt.ylabel('Predicted')
+    plt.savefig('../Plots/Conf_Matrix_RandomForest.png')
     plt.show()
     print("Conf_matrix: ", cm)
 

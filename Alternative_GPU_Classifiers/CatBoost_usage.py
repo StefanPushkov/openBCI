@@ -4,7 +4,7 @@ import catboost.utils as cbu
 import numpy as np
 import pandas as pd
 import tensorflow as tf  # Just for checking if GPU is available :)
-from openBCI import config as cf
+import config as cf
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import accuracy_score
@@ -15,7 +15,7 @@ print("GPU available:", GPU_AVAILABLE)
 
 
 # Get csv data
-data = pd.read_csv(cf.prepared_data_3min)
+data = pd.read_csv(cf.base_dir+cf.prepared_data_3min)
 
 X = data.drop(['0'], axis=1)
 y = data[['0']].values.ravel()

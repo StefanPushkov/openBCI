@@ -6,21 +6,23 @@ from sklearn.metrics import confusion_matrix, balanced_accuracy_score
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from joblib import dump, load
-from openBCI import config as cf
+import config as cf
 from sklearn.metrics import precision_recall_curve
 from sklearn.metrics import average_precision_score
 from sklearn.preprocessing import label_binarize
 import matplotlib.pyplot as plt
 import time
+import seaborn as sns; sns.set()
 from datetime import datetime
+
 def a():
     model = load('../models/SVM_EEG.joblib')
-    data = pd.read_csv(cf.prepared_data_3min)
+    data = pd.read_csv(cf.base_dir+cf.prepared_data_3min)
     X = data.drop(['0'], axis=1)
     y = data[['0']]  # .values.ravel()
     X = np.c_[X]
     print(y.shape)
-    '''
+
     # Feature Scaling
     StdScaler = StandardScaler()
     X_scaled = StdScaler.fit_transform(X)
@@ -64,16 +66,23 @@ def a():
         'Average precision score, micro-averaged over all classes: AP={0:0.2f}'.format(average_precision["micro"]))
     plt.savefig('../Plots/Avg_Prec_scoreSVM.png')
 
+    # Confusion matrix
+    cm = confusion_matrix(y, p)
+    names = (['rest(0)', 'left', 'right'])
+    sns.heatmap(cm, square=True, annot=True, fmt='d', cbar=False,
+                xticklabels=names, yticklabels=names)
+    plt.xlabel('Truth')
+    plt.ylabel('Predicted')
+    plt.savefig('../Plots/Conf_Matrix_SVM.png')
+    plt.show()
+    print("Conf_matrix: ", cm)
+
     # Accuracy
     accu_percent = accuracy_score(y, p) * 100
     print("Accuracy obtained over the whole test set is %0.6f %% ." % (accu_percent))
 
-        # Balanced Accuracy Score
-    blnc = balanced_accuracy_score(y, pred) * 100
+    # Balanced Accuracy Score
+    blnc = balanced_accuracy_score(y, p) * 100
     print("balanced_accuracy_score: %0.6f %% ." % (blnc))
 
-        # Confusion matrix
-    cm = confusion_matrix(y, pred)
-    print("Conf_matrix: ", cm)
-'''
 a()

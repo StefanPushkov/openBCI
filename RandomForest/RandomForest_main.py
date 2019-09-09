@@ -3,9 +3,9 @@ from sklearn.metrics import accuracy_score, balanced_accuracy_score
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestClassifier
-from openBCI import config as cf
+import config as cf
 from joblib import dump
-from openBCI.Channel_selection import variance
+from Channel_selection.variance import count_variance
 
 # from DataPreparation.main_preparation import data_processing
 
@@ -16,7 +16,7 @@ def RandomForest_fitting():
     X = data.drop(['0'], axis=1)
 
     # Get the channel numbers with the highest variance
-    # channels = variance.count_variance(cf.prepared_data_15min)
+    # channels = count_variance(cf.prepared_data_15min)
 
     # Get features from chosen channels
     # X = data[channels]

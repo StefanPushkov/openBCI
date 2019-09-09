@@ -7,11 +7,11 @@ import pandas as pd
 from sklearn.metrics import accuracy_score, balanced_accuracy_score
 import matplotlib.pyplot as plt
 import seaborn as sns; sns.set()
-from openBCI import config as cf
+import config as cf
 
 # data_processing(cf.raw_data, 29)
 # Get csv data
-data = pd.read_csv(cf.prepared_data_15min)
+data = pd.read_csv(cf.base_dir+cf.prepared_data_15min)
 
 X = data.drop(['0'], axis=1)
 y = data[['0']].values.ravel()

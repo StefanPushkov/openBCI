@@ -4,7 +4,7 @@ import catboost.utils as cbu
 import numpy as np
 import pandas as pd
 import tensorflow as tf  # Just for checking if GPU is available :)
-from openBCI import config as cf
+import config as cf
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import accuracy_score
@@ -31,7 +31,7 @@ y_test = data_ts[['0']].values.ravel()
 '''
 
 # Get csv data
-data = pd.read_csv(cf.prepared_data_15min_vs)
+data = pd.read_csv(cf.base_dir+cf.prepared_data_15min)
 
 X = data.drop(['0'], axis=1)
 y = data[['0']].values.ravel()
@@ -55,7 +55,7 @@ estimator.fit(X_Train, Y_Train)
 pred = estimator.predict(x_test)
 
 print("Saving model...")
-estimator.save_model('c:/Storage/Mark/openBCI/openBCI/models/CatBoost.mlmodel')
+estimator.save_model(cf.base_dir+'models/CatBoost.mlmodel')
 ac = accuracy_score(y_test, pred)
 
 print(ac)

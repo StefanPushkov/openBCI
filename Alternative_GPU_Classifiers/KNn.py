@@ -1,12 +1,12 @@
 from sklearn.neighbors import KNeighborsClassifier, NearestNeighbors
 import pandas as pd
-from openBCI import config as cf
+import config as cf
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import accuracy_score
 
 
-data = pd.read_csv(cf.prepared_data_15min)
+data = pd.read_csv(cf.base_dir+cf.prepared_data_15min)
 data_tr = data.loc[:130000]
 data_ts = data.loc[130001:]
 print(data.shape)
