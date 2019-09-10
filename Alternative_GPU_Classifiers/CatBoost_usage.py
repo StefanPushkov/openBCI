@@ -31,7 +31,7 @@ X_scaled = StdScaler.fit_transform(X)
 X_Train, x_test, Y_Train, y_test = train_test_split(X_scaled, y, test_size=0.99, random_state=0)
 
 estimator = cb.CatBoostClassifier()
-estimator.load_model("../models/CatBoost.mlmodel")
+estimator.load_model(cf.base_dir+"/models/CatBoost.mlmodel")
 pred = estimator.predict(x_test)
 
 ac = accuracy_score(y_test, pred)

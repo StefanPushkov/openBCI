@@ -13,14 +13,14 @@ def ent(data):
     """
 
     p_data = y.value_counts()
-    print(p_data) # counts occurrence of each value
+    print("Samples for each class: \n", p_data) # counts occurrence of each value
     entropy = scipy.stats.entropy(p_data)  # get entropy from counts
     return entropy
 
-a = ent(cf.prepared_data_3min)
-print(a)
+a = ent(cf.base_dir+cf.prepared_data_3min)
+print('Entropy value: ', a)
 
-def count_variance(datafile: str):
+def count_variance(datafile: str, num=0):
     # Read data
     data = pd.read_csv(datafile)
 
@@ -39,6 +39,6 @@ def count_variance(datafile: str):
         selected_channels.append(str(sorted_list[i][0]))
     return selected_channels
 
-a = count_variance(cf.prepared_data_3min)
+a = count_variance(cf.base_dir+cf.prepared_data_3min)
 print(a)
 

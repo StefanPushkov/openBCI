@@ -8,7 +8,7 @@ import os
 
 final_directory = cf.base_dir+"/prepared_data_15min"
 dir_for_converted_data = cf.base_dir+"/converted_data"
-raw_data = cf.base_dir+cf.raw_data_3min
+raw_data = cf.base_dir+cf.raw_data_15min
 
 
 def data_processing(raw_data: str, num_new=None, out_dir=final_directory):

@@ -13,7 +13,7 @@ def auto_markup(filename: str):
     data.index = index_list
     data['class'] = 0
     num = filename[-9:-7]
-    def set_class(start=0, stop=0, classname=0):
+    def set_class(start: int, stop: int, classname: int):
         data.loc[start:stop, 'class'] = classname
 
     left = data['left']
@@ -42,12 +42,12 @@ def auto_markup(filename: str):
         right_up = []
         for i in right.index:
             if right[i] == '3333':
-                # data[i, 'class'] = 1
+                # data[i, 'class'] = 2
                 right_down.append(i)
 
         for i in right.index:
             if right[i] == '4444':
-                # data[i, 'class'] = 1
+                # data[i, 'class'] = 2
                 right_up.append(i)
 
         left_interval = list(zip(right_down, right_up))

@@ -13,7 +13,7 @@ def auto_markup(filename: str):
     data.index = index_list
     data['class'] = 0
     num = filename[-9:-7]
-    def set_class(start=0, stop=0, classname=0):
+    def set_class(start: int, stop: int, classname: int):
         data.loc[start:stop, 'class'] = classname
 
     left = data['left']

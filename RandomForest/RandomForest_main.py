@@ -5,14 +5,14 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestClassifier
 import config as cf
 from joblib import dump
-from Channel_selection.variance import count_variance
+#from Channel_selection.variance import count_variance
 
 # from DataPreparation.main_preparation import data_processing
 
 def RandomForest_fitting():
     # data_processing(cf.raw_data, 29)
     # Get csv data
-    data = pd.read_csv(cf.prepared_data_15min)
+    data = pd.read_csv(cf.base_dir+cf.prepared_data_15min)
     X = data.drop(['0'], axis=1)
 
     # Get the channel numbers with the highest variance
@@ -43,7 +43,7 @@ def RandomForest_fitting():
     pred = clf.predict(x_test)
 
     # Model Saving
-    dump(clf, '../models/RandomForest_model_15min.joblib')
+    dump(clf, cf.base_dir+'/models/RandomForest_model_15min.joblib')
 
     # Testing accuracy
     print('Accuracy metrics are evaluated')

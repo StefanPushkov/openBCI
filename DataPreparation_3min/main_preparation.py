@@ -34,4 +34,4 @@ def data_processing(raw_data: str, num_new=None, out_dir=final_directory):
     print('Data processing ended')
 
 # Merging to one
-data_processing(raw_data=raw_data, num_new='2B', out_dir=final_directory)
+data_processing(raw_data=raw_data, num_new='30', out_dir=final_directory)

@@ -55,14 +55,11 @@ estimator.fit(X_Train, Y_Train)
 pred = estimator.predict(x_test)
 
 print("Saving model...")
-estimator.save_model(cf.base_dir+'models/CatBoost.mlmodel')
+estimator.save_model(cf.base_dir+'/models/CatBoost.mlmodel')
 ac = accuracy_score(y_test, pred)
 
 print(ac)
 
-
-
-print('Acc N2: ', ac)
 
 '''
 class UciAdultClassifierObjective(object):

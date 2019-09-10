@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 from sklearn.metrics import accuracy_score, balanced_accuracy_score, confusion_matrix
 from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import train_test_split
 import config as cf
 from sklearn.metrics import precision_recall_curve
 from sklearn.metrics import average_precision_score
@@ -11,19 +12,21 @@ import matplotlib.pyplot as plt
 import time
 import seaborn as sns; sns.set()
 from datetime import datetime
-from Channel_selection import variance
+#from Channel_selection import variance
 
 
 def prediction(data: str):
-    model = load('../models/RandomForest_model_15min.joblib')
+    model = load(cf.base_dir+'/models/RandomForest_model_15min.joblib')
     dt = pd.read_csv(data)
     # Get the channel numbers with the highest variance
     # data = data.loc[]
-    # X = dt.drop(['0'], axis=1)
-    channels = variance.count_variance(data)
-    X = dt[channels]
+    X = dt.drop(['0'], axis=1)
+
+    # channels = variance.count_variance(data)
+    # X = dt[channels]
+
     y = dt.iloc[:,8:]#.values.ravel()
-    #X = np.c_[X]
+    X = np.c_[X]
 
 
     # Feature Scaling
@@ -34,7 +37,7 @@ def prediction(data: str):
     Y_bin = label_binarize(y, classes=[0, 1, 2])
     n_classes = Y_bin.shape[1]
     print(n_classes)
-    # X_Train, x_test, Y_Train, y_test = train_test_split(X_scaled, Y, test_size=0.99, random_state=0)
+    X_Train, x_test, Y_Train, y_test = train_test_split(X_scaled, y, test_size=0.99, random_state=42)
 
     print('Prediction started')
     start_time = time.time()  # Time counter
@@ -73,21 +76,21 @@ def prediction(data: str):
     plt.title(
         'Average precision score, micro-averaged over all classes: AP={0:0.2f}'
             .format(average_precision["micro"]))
-    plt.savefig('../Plots/Avg_Prec_score.png')
+    plt.savefig(cf.base_dir+'/Plots/Avg_Prec_score.png')
     # Evaluating accuracy using Accuracy and Balanced Accuracy Score metrics
-    p = model.predict(X_scaled)
+    p = model.predict(x_test)
     print('Accuracy metrics are evaluated')
 
     # Accuracy
-    accu_percent = accuracy_score(y, p) * 100
+    accu_percent = accuracy_score(y_test, p) * 100
     print("Accuracy obtained over the whole test set is %0.6f %% ." % (accu_percent))
 
     # Balanced Accuracy Score
-    blnc = balanced_accuracy_score(y, p) * 100
+    blnc = balanced_accuracy_score(y_test, p) * 100
     print("balanced_accuracy_score: %0.6f %% ." % (blnc))
 
     # Confusion matrix
-    cm = confusion_matrix(y, p)
+    cm = confusion_matrix(y_test, p)
     names = (['rest(0)', 'left', 'right'])
     sns.heatmap(cm, square=True, annot=True, fmt='d', cbar=False,
                 xticklabels=names, yticklabels=names)
@@ -138,5 +141,5 @@ def prediction(data: str):
     print("Plot and prediction completed: %s seconds " % (time.time() - start_time))
 
 
-prediction(cf.prepared_data_3min)
+prediction(cf.base_dir+cf.prepared_data_3min)
 

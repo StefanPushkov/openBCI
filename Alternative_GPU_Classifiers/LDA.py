@@ -21,7 +21,7 @@ y = data['0']#.values.ravel()
 
 p_data = y.value_counts()
 print(p_data)
-'''
+
 # Feature Scaling
 StdScaler = StandardScaler()
 X_scaled = StdScaler.fit_transform(X)
@@ -50,4 +50,3 @@ sns.heatmap(mat, square=True, annot=True, fmt='d', cbar=False,
 plt.xlabel('Truth')
 plt.ylabel('Predicted')
 plt.show()
-'''

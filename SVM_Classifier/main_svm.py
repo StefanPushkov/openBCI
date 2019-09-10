@@ -6,7 +6,7 @@ from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from joblib import dump, load
-from openBCI  import config as cf
+import config as cf
 #import matplotlib.pyplot as graph
 
 
@@ -54,4 +54,4 @@ accu_percent = compute_accuracy(X_test, y_test, model_svc) * 100
 print("Accuracy obtained over the whole training set is %0.6f %% ." % (accu_percent))
 #conf_mat = compute_confusion_matrix(features_train, labels_train, model_svc)
 #print('Confusion matrix: ', conf_mat)
-dump(model_svc, '../models/SVM_EEG.joblib')
+dump(model_svc, cf.base_dir+'/models/SVM_EEG.joblib')
