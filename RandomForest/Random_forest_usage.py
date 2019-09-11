@@ -16,16 +16,16 @@ from datetime import datetime
 
 
 def prediction(data: str):
-    model = load(cf.base_dir+'/models/RandomForest_model_15min.joblib')
+    model = load(cf.base_dir+'/models/RandomForest_model_{0}.joblib'.format('real'))
     dt = pd.read_csv(data)
     # Get the channel numbers with the highest variance
     # data = data.loc[]
-    X = dt.drop(['0'], axis=1)
+    X = dt.drop(['0'], axis=1) #[['1', '4']]
 
     # channels = variance.count_variance(data)
     # X = dt[channels]
 
-    y = dt.iloc[:,8:]#.values.ravel()
+    y = dt[['0']]#.values.ravel()
     X = np.c_[X]
 
 
@@ -86,8 +86,8 @@ def prediction(data: str):
     print("Accuracy obtained over the whole test set is %0.6f %% ." % (accu_percent))
 
     # Balanced Accuracy Score
-    blnc = balanced_accuracy_score(y_test, p) * 100
-    print("balanced_accuracy_score: %0.6f %% ." % (blnc))
+    # blnc = balanced_accuracy_score(y_test, p) * 100
+    # print("balanced_accuracy_score: %0.6f %% ." % (blnc))
 
     # Confusion matrix
     cm = confusion_matrix(y_test, p)
@@ -141,5 +141,5 @@ def prediction(data: str):
     print("Plot and prediction completed: %s seconds " % (time.time() - start_time))
 
 
-prediction(cf.base_dir+cf.prepared_data_3min)
+prediction(cf.base_dir+cf.prepared_data_imagery_V)
 

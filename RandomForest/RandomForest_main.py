@@ -12,8 +12,8 @@ from joblib import dump
 def RandomForest_fitting():
     # data_processing(cf.raw_data, 29)
     # Get csv data
-    data = pd.read_csv(cf.base_dir+cf.prepared_data_15min)
-    X = data.drop(['0'], axis=1)
+    data = pd.read_csv(cf.base_dir+cf.prepared_data_real_comb)
+    X = data.drop(['0'], axis=1) #[['1', '4']]
 
     # Get the channel numbers with the highest variance
     # channels = count_variance(cf.prepared_data_15min)
@@ -43,7 +43,7 @@ def RandomForest_fitting():
     pred = clf.predict(x_test)
 
     # Model Saving
-    dump(clf, cf.base_dir+'/models/RandomForest_model_15min.joblib')
+    dump(clf, cf.base_dir+'/models/RandomForest_model_{0}.joblib'.format('real'))
 
     # Testing accuracy
     print('Accuracy metrics are evaluated')

@@ -8,7 +8,7 @@ from joblib import dump, load
 import os
 
 
-data = pd.read_csv(cf.base_dir+cf.prepared_data_3min)
+data = pd.read_csv(cf.base_dir+cf.prepared_data_imagery_V)
 X = data.drop(['0'], axis=1) #[['1', '4', '7', '8', '2']]
 y = data[['0']].values.ravel()
 

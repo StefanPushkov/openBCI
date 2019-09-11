@@ -17,8 +17,6 @@ def ent(data):
     entropy = scipy.stats.entropy(p_data)  # get entropy from counts
     return entropy
 
-a = ent(cf.base_dir+cf.prepared_data_3min)
-print('Entropy value: ', a)
 
 def count_variance(datafile: str, num=0):
     # Read data
@@ -39,6 +37,12 @@ def count_variance(datafile: str, num=0):
         selected_channels.append(str(sorted_list[i][0]))
     return selected_channels
 
-a = count_variance(cf.base_dir+cf.prepared_data_3min)
-print(a)
 
+
+def main(datafile):
+    a = ent(datafile)
+    print('Entropy value: ', a)
+    b = count_variance(datafile)
+    print(b)
+
+main(cf.base_dir + cf.prepared_data_3min_V)

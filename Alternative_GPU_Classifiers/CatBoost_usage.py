@@ -15,7 +15,7 @@ print("GPU available:", GPU_AVAILABLE)
 
 
 # Get csv data
-data = pd.read_csv(cf.base_dir+cf.prepared_data_3min)
+data = pd.read_csv(cf.base_dir+cf.prepared_data_imagery_V)
 
 X = data.drop(['0'], axis=1)
 y = data[['0']].values.ravel()

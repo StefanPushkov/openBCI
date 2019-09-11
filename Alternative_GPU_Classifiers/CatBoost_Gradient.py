@@ -1,4 +1,5 @@
 import catboost as cb
+from catboost import cv, Pool
 import catboost.datasets as cbd
 import catboost.utils as cbu
 import numpy as np
@@ -31,7 +32,7 @@ y_test = data_ts[['0']].values.ravel()
 '''
 
 # Get csv data
-data = pd.read_csv(cf.base_dir+cf.prepared_data_15min)
+data = pd.read_csv(cf.base_dir+cf.prepared_data_real_comb)
 
 X = data.drop(['0'], axis=1)
 y = data[['0']].values.ravel()
@@ -47,11 +48,27 @@ X_scaled = StdScaler.fit_transform(X)
 X_Train, x_test, Y_Train, y_test = train_test_split(X_scaled, y, test_size=0.5, random_state=0)
 
 
-estimator = cb.CatBoostClassifier(depth=10, iterations=600, verbose=10, task_type='GPU', learning_rate=0.08, allow_writing_files=False, loss_function='MultiClass')
-#estimator = cb.CatBoostClassifier(l2_leaf_reg=0.1, depth=8, iterations=1550, verbose=10, task_type='GPU', learning_rate=0.0775, allow_writing_files=False)
+#estimator = cb.CatBoostClassifier(depth=10, iterations=600, verbose=10, task_type='GPU', learning_rate=0.08, allow_writing_files=False, loss_function='MultiClass')
+estimator = cb.CatBoostClassifier(l2_leaf_reg=0.1, depth=8, iterations=1550, verbose=10, task_type='GPU', learning_rate=0.0775, allow_writing_files=False)
+params = {'l2_leaf_reg': 0.1,
+        'depth': 8,
+              'iterations': 1550,
+                         'verbose': 10,
+                                 'task_type': 'GPU',
+                                           'learning_rate': 0.0775}
 
 
 estimator.fit(X_Train, Y_Train)
+
+# Cross Validation
+
+cv_dataset = Pool(data=X_Train,
+                  label=Y_Train)
+scores = cv(cv_dataset,
+            params,
+            fold_count=2)
+
+print('CV Result: ', scores)
 pred = estimator.predict(x_test)
 
 print("Saving model...")
@@ -187,3 +204,4 @@ def calculate_score_on_dataset_and_show_graph(X, y, model):
 
 calculate_score_on_dataset_and_show_graph(x_test, y_test, model)
 '''
+
