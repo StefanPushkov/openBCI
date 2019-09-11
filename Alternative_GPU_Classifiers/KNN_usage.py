@@ -6,11 +6,20 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import accuracy_score
 from joblib import dump, load
 import os
-
+import numpy as np
+from numpy.fft import fft, rfft
 
 data = pd.read_csv(cf.base_dir+cf.prepared_data_imagery_V)
 X = data.drop(['0'], axis=1) #[['1', '4', '7', '8', '2']]
 y = data[['0']].values.ravel()
+'''
+# Fourier Transform
+len = X.shape[0]
+print(len)
+ff = fft(X)
+ff = np.abs(ff[:len])
+X = np.transpose(np.array(ff), axes=[0, 1])
+'''
 
 # Feature Scaling
 StdScaler = StandardScaler()

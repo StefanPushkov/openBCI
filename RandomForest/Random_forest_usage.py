@@ -1,10 +1,11 @@
 from joblib import load
 import pandas as pd
-import numpy as np
 from sklearn.metrics import accuracy_score, balanced_accuracy_score, confusion_matrix
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 import config as cf
+from numpy.fft import fft
+import numpy as np
 from sklearn.metrics import precision_recall_curve
 from sklearn.metrics import average_precision_score
 from sklearn.preprocessing import label_binarize
@@ -21,6 +22,14 @@ def prediction(data: str):
     # Get the channel numbers with the highest variance
     # data = data.loc[]
     X = dt.drop(['0'], axis=1) #[['1', '4']]
+    '''
+    # Fourier Transform
+    len = X.shape[0]
+    print(len)
+    ff = fft(X)
+    ff = np.abs(ff[:len])
+    X = np.transpose(np.array(ff), axes=[0, 1])
+    '''
 
     # channels = variance.count_variance(data)
     # X = dt[channels]
@@ -92,11 +101,12 @@ def prediction(data: str):
     # Confusion matrix
     cm = confusion_matrix(y_test, p)
     names = (['rest(0)', 'left', 'right'])
+    fig, ax = plt.subplots(figsize=(5, 5))
     sns.heatmap(cm, square=True, annot=True, fmt='d', cbar=False,
-                xticklabels=names, yticklabels=names)
+                xticklabels=names, yticklabels=names, ax=ax)
     plt.xlabel('Truth')
     plt.ylabel('Predicted')
-    plt.savefig('../Plots/Conf_Matrix_RandomForest.png')
+    plt.savefig(cf.base_dir + '/Plots/Conf_Matrix_RandomForest.png')
     plt.show()
     print("Conf_matrix: ", cm)
 
@@ -136,7 +146,7 @@ def prediction(data: str):
     plt.ylabel('Precision')
     plt.title('Extension of Precision-Recall curve to multi-class')
     plt.legend(lines, labels, loc=(0, -.38), prop=dict(size=14))
-    plt.savefig('../Plots/Prec_Rec_curve_multi.png')
+    plt.savefig(cf.base_dir+'/Plots/Prec_Rec_curve_multi.png')
 
     print("Plot and prediction completed: %s seconds " % (time.time() - start_time))
 

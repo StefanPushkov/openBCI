@@ -6,13 +6,27 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import accuracy_score
 from joblib import dump, load
 import os
+import numpy as np
+from numpy.fft import fft, fftfreq
 
 
 data = pd.read_csv(cf.base_dir+cf.prepared_data_real_comb)
 X = data.drop(['0'], axis=1)#[['1', '4', '7', '8']] # 1, 4, 7, 8
-print(X.shape[0])
+
 y = data[['0']].values.ravel()
+'''
+
 # Feature Scaling
+n_samples = X.shape[0]
+print(n_samples)
+ff = fft(X)
+ffq = fftfreq(len(ff), 1.0/250)
+# X = np.abs(ffq[:n_samples])
+ff = np.abs(ff[:n_samples])
+X = np.transpose(np.array(ff), axes=[0, 1])
+'''
+
+
 StdScaler = StandardScaler()
 X_scaled = StdScaler.fit_transform(X)
 
@@ -40,7 +54,9 @@ clf.fit(X_Train, Y_Train)
 cv_score = cross_val_score(clf, X_Train, Y_Train, cv=5)
 
 print(cv_score)
-# Save Model 
+
+# Save Model
+
 alt_models_dir = "/alt_models"
 if not os.path.exists(alt_models_dir):
     os.makedirs(alt_models_dir)

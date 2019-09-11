@@ -8,6 +8,7 @@ import config as cf
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import accuracy_score
+from numpy.fft import fft
 
 # Checking if GPU is available
 GPU_AVAILABLE = tf.test.is_gpu_available()
@@ -22,6 +23,13 @@ y = data[['0']].values.ravel()
 
 # p_data = y.value_counts()
 #print(p_data)
+
+# Fourier Transform
+len = X.shape[0]
+print(len)
+ff = fft(X)
+ff = np.abs(ff[:len])
+X = np.transpose(np.array(ff), axes=[0, 1])
 
 # Feature Scaling
 StdScaler = StandardScaler()

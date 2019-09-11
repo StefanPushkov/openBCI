@@ -33,7 +33,7 @@ def compute_confusion_matrix(test_f, test_l, c):
     return x
 
 
-data = pd.read_csv(cf.prepared_data_real_V)
+data = pd.read_csv(cf.base_dir+cf.prepared_data_real_comb)
 print(data.head())
 # data = data.loc[:75055]
 
