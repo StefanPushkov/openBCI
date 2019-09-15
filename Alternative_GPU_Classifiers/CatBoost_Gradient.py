@@ -21,15 +21,8 @@ data = pd.read_csv(cf.base_dir+cf.prepared_data_real_comb)
 X = data.drop(['0'], axis=1)
 y = data[['0']].values.ravel()
 
-# Fourier Transform
-len = X.shape[0]
-print(len)
-ff = fft(X)
-ff = np.abs(ff[:len])
-X = np.transpose(np.array(ff), axes=[0, 1])
-
 # p_data = y.value_counts()
-#print(p_data)
+# print(p_data)
 
 # Feature Scaling
 StdScaler = StandardScaler()
@@ -41,6 +34,11 @@ X_Train, x_test, Y_Train, y_test = train_test_split(X_scaled, y, test_size=0.5, 
 
 #estimator = cb.CatBoostClassifier(depth=10, iterations=600, verbose=10, task_type='GPU', learning_rate=0.08, allow_writing_files=False, loss_function='MultiClass')
 estimator = cb.CatBoostClassifier(l2_leaf_reg=0.1, depth=8, iterations=1550, verbose=10, task_type='GPU', learning_rate=0.0775, allow_writing_files=False)
+
+estimator.fit(X_Train, Y_Train)
+
+'''
+# Cross Validation
 params = {'l2_leaf_reg': 0.1,
         'depth': 8,
               'iterations': 1550,
@@ -48,10 +46,6 @@ params = {'l2_leaf_reg': 0.1,
                                  'task_type': 'GPU',
                                            'learning_rate': 0.0775}
 
-
-estimator.fit(X_Train, Y_Train)
-
-'''
 cv_dataset = Pool(data=X_Train,
                   label=Y_Train)
 scores = cv(cv_dataset,
@@ -63,7 +57,7 @@ print('CV Result: ', scores)
 
 pred = estimator.predict(x_test)
 
-# Cross Validation
+# Saving model
 print("Saving model...")
 estimator.save_model(cf.base_dir+'/models/CatBoost.mlmodel')
 ac = accuracy_score(y_test, pred)

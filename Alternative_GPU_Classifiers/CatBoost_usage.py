@@ -24,13 +24,6 @@ y = data[['0']].values.ravel()
 # p_data = y.value_counts()
 #print(p_data)
 
-# Fourier Transform
-len = X.shape[0]
-print(len)
-ff = fft(X)
-ff = np.abs(ff[:len])
-X = np.transpose(np.array(ff), axes=[0, 1])
-
 # Feature Scaling
 StdScaler = StandardScaler()
 X_scaled = StdScaler.fit_transform(X)

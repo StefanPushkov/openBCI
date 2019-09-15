@@ -11,20 +11,9 @@ from numpy.fft import fft, fftfreq
 
 
 data = pd.read_csv(cf.base_dir+cf.prepared_data_real_comb)
+
 X = data.drop(['0'], axis=1)#[['1', '4', '7', '8']] # 1, 4, 7, 8
-
 y = data[['0']].values.ravel()
-'''
-
-# Feature Scaling
-n_samples = X.shape[0]
-print(n_samples)
-ff = fft(X)
-ffq = fftfreq(len(ff), 1.0/250)
-# X = np.abs(ffq[:n_samples])
-ff = np.abs(ff[:n_samples])
-X = np.transpose(np.array(ff), axes=[0, 1])
-'''
 
 
 StdScaler = StandardScaler()
@@ -34,7 +23,10 @@ X_scaled = StdScaler.fit_transform(X)
 X_Train, x_test, Y_Train, y_test = train_test_split(X_scaled, y, test_size=0.1, random_state=42)
 
 clf = KNeighborsClassifier(n_neighbors=3, weights='distance', metric='manhattan')
+
 '''
+# Cross Validation
+
 grid_params = {
     'n_neighbors': [3, 5, 11], 
     'weights': ['uniform', 'distance'], 

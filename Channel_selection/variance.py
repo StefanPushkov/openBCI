@@ -45,4 +45,5 @@ def main(datafile):
     b = count_variance(datafile)
     print(b)
 
+
 main(cf.base_dir + cf.prepared_data_real_comb)

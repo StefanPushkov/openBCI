@@ -12,19 +12,12 @@ import numpy as np
 # from DataPreparation.main_preparation import data_processing
 
 def RandomForest_fitting():
-    # data_processing(cf.raw_data, 29)
     # Get csv data
     data = pd.read_csv(cf.base_dir+cf.prepared_data_real_comb)
     X = data.drop(['0'], axis=1) #[['1', '4']]
 
     print(X.shape)
-    '''
-    # Fourier Transform
-    len = X.shape[0]
-    print(len)
-    ff = fft(X)
-    ff = np.abs(ff[:len])
-    X = np.transpose(np.array(ff), axes=[0, 1])
+
     
     # Get the channel numbers with the highest variance
     # channels = count_variance(cf.prepared_data_15min)
@@ -67,5 +60,5 @@ def RandomForest_fitting():
     blnc = balanced_accuracy_score(y_test, pred) * 100
     print("balanced_accuracy_score: %0.6f %% ." % (blnc))
 
-    '''
+
 RandomForest_fitting()

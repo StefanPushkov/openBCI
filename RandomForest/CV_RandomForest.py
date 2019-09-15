@@ -3,14 +3,14 @@ from sklearn.model_selection import RandomizedSearchCV
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 import numpy as np
-from openBCI import config as cf
+import config as cf
 from sklearn.model_selection import train_test_split
 import time
 from datetime import datetime
 
 
 def cv_RanfomForest():
-    data = pd.read_csv(cf.prepared_data_15min)
+    data = pd.read_csv(cf.prepared_data_real_comb)
     X = data.drop(['0'], axis=1)
     y = data[['0']].values.ravel()
 
