@@ -69,3 +69,20 @@ channels with highest variance - run `variance.py` inside `Channel_selection` fo
 3. XGBoost - have GPU implementation. 
 
     _TODO: implement grid-search for parameters tuning_
+    
+    
+
+### EEG classification theory ###
+
+1. Frequency ranges for motor imagery registration: _mu (8–12 Hz) and beta (13–28 Hz) [1]._ 
+Signal modulation is focused over sensorimotor cortex and in the _alpha- and beta frequency bands_ associated with _mu rhythm activity_ [2].
+
+2. ![](images_ReadME/SensorimotorAreas.png)
+
+
+
+__Sources:__
+
+[1] https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1989674/#R6
+[2] https://www.bci2000.org/mediawiki/index.php/User_Tutorial:Introduction_to_the_Mu_Rhythm
+
