@@ -79,10 +79,18 @@ Signal modulation is focused over sensorimotor cortex and in the _alpha- and bet
 
 2. ![](images_ReadME/SensorimotorAreas.png)
 
+3. From the scalp EEG signals, it has also been found that imagination of movement leads to short-lasting and circumscribed attenuation (or accentuation) in mu (8–12 Hz) and beta (13–28 Hz) rhythmic activities, known as event-related desynchronization (or synchronization) (ERD/ERS) [1].
+A person suppresses mu wave patterns when he or she performs a motor action or, with practice, when he or she visualizes performing a motor action [3]. 
+
+P.S.: Mu waves are suppressed when mirror neurons fire. Mirror neurons play a role in mapping others' movements into the brain without actually physically performing the movements [3]. 
 
 
 __Sources:__
 
 [1] https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1989674/#R6
+
 [2] https://www.bci2000.org/mediawiki/index.php/User_Tutorial:Introduction_to_the_Mu_Rhythm
+
+[3] https://en.wikipedia.org/wiki/Mu_wave
+
 
