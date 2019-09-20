@@ -17,7 +17,7 @@ from datetime import datetime
 
 def a():
     model = load('../models/SVM_EEG.joblib')
-    data = pd.read_csv(cf.base_dir+cf.prepared_data_3min)
+    data = pd.read_csv(cf.base_dir+cf.prepared_data_imagery_V)
     X = data.drop(['0'], axis=1)
     y = data[['0']]  # .values.ravel()
     X = np.c_[X]
@@ -67,7 +67,7 @@ def a():
     plt.savefig('../Plots/Avg_Prec_scoreSVM.png')
 
     # Confusion matrix
-    cm = confusion_matrix(y, p)
+    cm = confusion_matrix(y, p, labels=['rest(0)', 'left', 'right'])
     names = (['rest(0)', 'left', 'right'])
     sns.heatmap(cm, square=True, annot=True, fmt='d', cbar=False,
                 xticklabels=names, yticklabels=names)

@@ -3,10 +3,19 @@ from sklearn.model_selection import RandomizedSearchCV
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 import numpy as np
+import pywt
 import config as cf
 from sklearn.model_selection import train_test_split
 import time
 from datetime import datetime
+
+def wavelet_transform(ecg_data, waveletname):
+    list_features = []
+    for signal in ecg_data:
+        list_coef = pywt.wavedec(signal, waveletname)
+        for coef in list_coef:
+            list_features.append(coef)
+    return np.asarray(list_features)
 
 
 def cv_RanfomForest():

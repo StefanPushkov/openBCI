@@ -11,9 +11,12 @@ from sklearn.metrics import average_precision_score
 from sklearn.preprocessing import label_binarize
 import matplotlib.pyplot as plt
 import time
+from FFT.wavelet_transform import feature_extraction
+import pywt
 import seaborn as sns; sns.set()
 from datetime import datetime
 #from Channel_selection import variance
+
 
 
 def prediction(data: str):
@@ -21,40 +24,32 @@ def prediction(data: str):
     dt = pd.read_csv(data)
     # Get the channel numbers with the highest variance
     # data = data.loc[]
-    X = dt.drop(['0'], axis=1) #[['1', '4']]
-    '''
-    # Fourier Transform
-    len = X.shape[0]
-    print(len)
-    ff = fft(X)
-    ff = np.abs(ff[:len])
-    X = np.transpose(np.array(ff), axes=[0, 1])
-    '''
+    X = dt.drop(['0'], axis=1).loc[:2000] #[['1', '4']]
 
-    # channels = variance.count_variance(data)
-    # X = dt[channels]
-
-    y = dt[['0']]#.values.ravel()
-    X = np.c_[X]
+    y = dt[['0']].loc[:2000]#.values.ravel()
+    # X = np.c_[X]
 
 
     # Feature Scaling
-    StdScaler = StandardScaler()
-    X_scaled = StdScaler.fit_transform(X)
+    # StdScaler = StandardScaler()
+    # X_scaled = StdScaler.fit_transform(X)
 
 
     Y_bin = label_binarize(y, classes=[0, 1, 2])
     n_classes = Y_bin.shape[1]
     print(n_classes)
-    X_Train, x_test, Y_Train, y_test = train_test_split(X_scaled, y, test_size=0.99, random_state=42)
+    X_Train, x_test, Y_Train, y_test = train_test_split(X, y, test_size=0.99, random_state=42)
 
     print('Prediction started')
     start_time = time.time()  # Time counter
     print(" Started at ", datetime.utcfromtimestamp(int(time.time())).strftime('%Y-%m-%d %H:%M:%S'))
 
-
-    pred = model.predict_proba(X_scaled)
-
+    X_Train_Wt, x_test_wt = feature_extraction(X_Train, x_test)
+    print(X_Train_Wt.shape, x_test_wt.shape)
+    print(X_Train_Wt[:1, :])
+    """
+    pred = model.predict_proba(x_test_wt)
+    
     # Plot the micro-averaged Precision-Recall curve
     # For each class
     precision = dict()
@@ -86,8 +81,9 @@ def prediction(data: str):
         'Average precision score, micro-averaged over all classes: AP={0:0.2f}'
             .format(average_precision["micro"]))
     plt.savefig(cf.base_dir+'/Plots/Avg_Prec_score.png')
+    
     # Evaluating accuracy using Accuracy and Balanced Accuracy Score metrics
-    p = model.predict(x_test)
+    p = model.predict(x_test_wt)
     print('Accuracy metrics are evaluated')
 
     # Accuracy
@@ -99,11 +95,11 @@ def prediction(data: str):
     # print("balanced_accuracy_score: %0.6f %% ." % (blnc))
 
     # Confusion matrix
-    cm = confusion_matrix(y_test, p)
-    names = (['rest(0)', 'left', 'right'])
+    classes = ['rest(0)', 'left', 'right']
+    cm = confusion_matrix(y_test, p, labels=[0, 1, 2])
     fig, ax = plt.subplots(figsize=(5, 5))
-    sns.heatmap(cm, square=True, annot=True, fmt='d', cbar=False,
-                xticklabels=names, yticklabels=names, ax=ax)
+    sns.heatmap(cm, ax=ax, square=True, annot=True, fmt='d', cbar=False,
+                xticklabels=classes, yticklabels=classes, linewidths=0.2, annot_kws={"size": 16})
     plt.xlabel('Truth')
     plt.ylabel('Predicted')
     plt.savefig(cf.base_dir + '/Plots/Conf_Matrix_RandomForest.png')
@@ -149,7 +145,7 @@ def prediction(data: str):
     plt.savefig(cf.base_dir+'/Plots/Prec_Rec_curve_multi.png')
 
     print("Plot and prediction completed: %s seconds " % (time.time() - start_time))
-
+    """
 
 prediction(cf.base_dir+cf.prepared_data_imagery_V)
 

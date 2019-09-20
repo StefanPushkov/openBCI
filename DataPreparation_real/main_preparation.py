@@ -21,7 +21,7 @@ def data_processing(raw_data: str, num_new=None, out_dir=final_directory):
     csv = text_to_csv(raw_data, num_new)
 
 
-    # Function auto_markup returns "E:/exp/converted_data/markup_class{0}.csv".format(num)
+    # Function auto_markup returns "C:/Storage/Mark/BCI/openBCI/converted_data/markup_class{0}.csv".format(num)
     marked_up = auto_markup(csv)
 
 
