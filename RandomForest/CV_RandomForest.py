@@ -8,6 +8,7 @@ import config as cf
 from sklearn.model_selection import train_test_split
 import time
 from datetime import datetime
+from FFT.wavelet_transform import feature_extraction
 
 def wavelet_transform(ecg_data, waveletname):
     list_features = []
@@ -29,7 +30,7 @@ def cv_RanfomForest():
 
     # Splitting the dataset into the Training set and Test set
     X_Train, x_test, Y_Train, y_test = train_test_split(X_scaled, y, test_size=0.3, random_state=0)
-
+    X_Train_WT, x_test_wt = feature_extraction(X_Train, Y_Train)
     # Number of trees in random forest
     n_estimators = [int(x) for x in np.linspace(start=200, stop=2000, num=10)]
     # Number of features to consider at every split

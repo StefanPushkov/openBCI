@@ -22,7 +22,7 @@ def data_processing(raw_data: str, num_new=None, out_dir=final_directory):
 
 
     # Function auto_markup returns "C:/Storage/Mark/BCI/openBCI/converted_data/markup_class{0}.csv".format(num)
-    marked_up = auto_markup(csv)
+    marked_up = auto_markup(csv, markup_margin=cf.margin_for_markup_real)
 
 
     # Function convert_to_txt returns 'C:/Storage/Mark/BCI/openBCI/converted_data/full_prepared{0}.txt'.format(num)

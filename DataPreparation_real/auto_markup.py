@@ -2,7 +2,7 @@ import pandas as pd
 import csv
 import config as cf
 
-def auto_markup(filename: str):
+def auto_markup(filename: str, markup_margin=0):
     data = pd.read_csv(filename, dtype='unicode')
     data.drop(data.tail(1).index, inplace=True) # Drop last line with NaN
     data_length = data.shape[0]
@@ -34,7 +34,7 @@ def auto_markup(filename: str):
 
         left_interval = list(zip(left_down, left_up))
         for i in left_interval:
-            set_class(start=i[0]-cf.margin_for_markup_real, stop=i[0], classname=1)
+            set_class(start=i[0]-markup_margin, stop=i[0], classname=1)
 
 
     def set_right_hand():
@@ -52,7 +52,7 @@ def auto_markup(filename: str):
 
         left_interval = list(zip(right_down, right_up))
         for i in left_interval:
-            set_class(start=i[0]-cf.margin_for_markup_real, stop=i[0], classname=2)
+            set_class(start=i[0]-markup_margin, stop=i[0], classname=2)
 
     set_left_hand()
     set_right_hand()
